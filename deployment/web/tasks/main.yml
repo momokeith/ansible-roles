@@ -1,0 +1,4 @@
+---
+# tasks file for deployment/web
+- debug:
+    msg: "Deploying...."
