@@ -24,15 +24,7 @@
   - name: Moving from tmp
     command: mv {{ tmp_dir }}/{{ project_name }} {{ web_dir }}/{{ project_name }}/{{ commit_hash.stdout }}
 
-  - name: Running composer
-    command: composer install
-    args:
-      chdir: "{{ web_dir }}/{{ project_name }}/{{ commit_hash.stdout }}"
-
-  - name: Running tests
-    command: bin/phpspec r
-    args:
-      chdir: "{{ web_dir }}/{{ project_name }}/{{ commit_hash.stdout }}"
+  - include: build.yml
 
   - name: Change directory access
     file:
