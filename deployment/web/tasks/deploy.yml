@@ -1,0 +1,19 @@
+---
+
+- debug:
+      msg: "Deploying {{ commit_hash.stdout }}"
+
+- name: Change directory access
+  file:
+   path: "{{ web_dir }}/{{ project_name }}/{{ commit_hash.stdout }}"
+   state: touch
+   mode: "u+rwx,g-wx,o-rwx"
+   owner: www-data
+   group: www-data
+
+- name: Create link
+  file:
+   path: "{{ web_dir }}/{{ project_name }}/current"
+   src: "{{ web_dir }}/{{ project_name }}/{{ commit_hash.stdout }}"
+   state: link
+   mode: 0755

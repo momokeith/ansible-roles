@@ -1,42 +1,21 @@
 ---
 
-  - name: Create project directory
-    file:
-     path: "{{ web_dir }}/{{ project_name }}"
-     state: directory
-     mode: 0775
+- include: checkout.yml
 
-  - name: Checkout project
-    git:
-      dest: "{{ tmp_dir }}/{{ project_name }}"
-      repo: "{{ git_repo }}"
-      version: "{{ git_branch }}"
+- name: Create project directory
+  file:
+   path: "{{ web_dir }}/{{ project_name }}"
+   state: directory
+   mode: 0775
 
-  - name: Get last commit hash
-    command: git rev-parse HEAD
-    args:
-      chdir: "{{ tmp_dir }}/{{ project_name }}"
-    register: commit_hash
+- name: Get last commit hash
+  command: git rev-parse HEAD
+  args:
+    chdir: "{{ tmp_dir }}/{{ project_name }}"
+  register: commit_hash
 
-  - debug:
-      msg: "Deploying {{ commit_hash.stdout }}"
+- name: Moving artifact to {{ web_dir }}/{{ project_name }}/{{ commit_hash.stdout }}
+  command: mv {{ tmp_dir }}/{{ project_name }} {{ web_dir }}/{{ project_name }}/{{ commit_hash.stdout }}
 
-  - name: Moving from tmp
-    command: mv {{ tmp_dir }}/{{ project_name }} {{ web_dir }}/{{ project_name }}/{{ commit_hash.stdout }}
-
-  - include: build.yml
-
-  - name: Change directory access
-    file:
-     path: "{{ web_dir }}/{{ project_name }}/{{ commit_hash.stdout }}"
-     state: touch
-     mode: "u+rwx,g-wx,o-rwx"
-     owner: www-data
-     group: www-data
-
-  - name: Create link
-    file:
-     path: "{{ web_dir }}/{{ project_name }}/current"
-     src: "{{ web_dir }}/{{ project_name }}/{{ commit_hash.stdout }}"
-     state: link
-     mode: 0755
+- include: build.yml
+- include: deploy.yml

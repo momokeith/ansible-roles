@@ -1,0 +1,7 @@
+---
+
+- name: Checkout {{ project_name }}
+  git:
+    dest: "{{ tmp_dir }}/{{ project_name }}"
+    repo: "{{ git_repo }}"
+    version: "{{ git_branch }}"
