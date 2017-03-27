@@ -1,0 +1,9 @@
+---
+# vars file for nginx-fpm
+
+vhosts:
+  test.local:
+    root: /var/www/test/current
+    location:
+      php:
+        fastcgi_pass: unix:/var/run/php/php5.6-fpm.sock
