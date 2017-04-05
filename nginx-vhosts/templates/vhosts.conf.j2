@@ -3,9 +3,9 @@ server {
     listen *:80;
     listen *:443 ssl;
 
-    server_name {{ item.key }};
+    server_name {{ item.value.server_names | join(" ") }};
 
-    root {{ item.value.root }}/current;
+    root {{ item.value.root }};
 
     index index.php index.html;
 

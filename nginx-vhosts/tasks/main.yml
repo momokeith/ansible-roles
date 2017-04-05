@@ -1,8 +1,8 @@
 ---
 # tasks file for nginx-fpm
-- name: Create vhosts
-  template:
-    src: vhosts.conf.j2
-    dest: "{{ item.key }}.conf"
-  with_items: "{{ vhosts }}"
+
+- include: create_root_dirs.yml
+- include: create_vhosts.yml
+
+
 
