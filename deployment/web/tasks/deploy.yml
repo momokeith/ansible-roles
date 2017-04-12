@@ -3,14 +3,11 @@
 - debug:
       msg: "Deploying {{ commit_hash.stdout }}"
 
+- name: Change owner
+  command: chown -R www-data:www-data {{ web_dir }}/{{ project_name }}/{{ commit_hash.stdout }}
+
 - name: Change directory access
-  file:
-   path: "{{ web_dir }}/{{ project_name }}/{{ commit_hash.stdout }}"
-   state: touch
-   mode: "u=rwx,g=rx,o=r"
-   owner: www-data
-   group: www-data
-   recurse: yes
+  command: chmod -R u=rwx,g=rx,o=r {{ web_dir }}/{{ project_name }}/{{ commit_hash.stdout }}
 
 - name: Create link
   file:
