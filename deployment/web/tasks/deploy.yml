@@ -7,7 +7,7 @@
   file:
    path: "{{ web_dir }}/{{ project_name }}/{{ commit_hash.stdout }}"
    state: touch
-   mode: "u+rwx,g-wx,o-rwx"
+   mode: "u=rwx,g=rx,o=r"
    owner: www-data
    group: www-data
 
