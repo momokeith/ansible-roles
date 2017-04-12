@@ -10,6 +10,7 @@
    mode: "u=rwx,g=rx,o=r"
    owner: www-data
    group: www-data
+   recurse: yes
 
 - name: Create link
   file:

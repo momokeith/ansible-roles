@@ -6,7 +6,6 @@
   file:
    path: "{{ web_dir }}/{{ project_name }}"
    state: directory
-   mode: "u=rwx,g=rx,o=r"
 
 - name: Get last commit hash
   command: git rev-parse HEAD
