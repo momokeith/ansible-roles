@@ -6,13 +6,18 @@
   file:
    path: "{{ web_dir }}/{{ project_name }}"
    state: directory
-   mode: 0775
+   mode: "u=rwx,g=rx,o=r"
 
 - name: Get last commit hash
   command: git rev-parse HEAD
   args:
     chdir: "{{ tmp_dir }}/{{ project_name }}"
   register: commit_hash
+
+- name: Remove the deployment directory
+  file:
+   path: "{{ web_dir }}/{{ project_name }}/{{ commit_hash.stdout }}"
+   state: absent
 
 - name: Moving artifact to {{ web_dir }}/{{ project_name }}/{{ commit_hash.stdout }}
   command: mv {{ tmp_dir }}/{{ project_name }} {{ web_dir }}/{{ project_name }}/{{ commit_hash.stdout }}
