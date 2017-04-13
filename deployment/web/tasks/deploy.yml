@@ -15,3 +15,5 @@
    src: "{{ web_dir }}/{{ project_name }}/{{ commit_hash.stdout }}"
    state: link
    mode: "u=rwx,go=rx"
+  notify:
+    - restart nginx
