@@ -1,8 +1,0 @@
----
-
-- name: Create root directory
-  file:
-   path: "{{ web_dir }}/{{ item.key }}"
-   state: directory
-   mode: 0775
-  with_dict: "{{ vhosts }}"

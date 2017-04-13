@@ -1,7 +1,6 @@
 ---
 # tasks file for nginx-fpm
 
-- include: create_root_dirs.yml
 - include: create_vhosts.yml
 
 
