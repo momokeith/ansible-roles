@@ -1,6 +1,6 @@
 ---
 
-- name: Checkout {{ project_name }}
+- name: Checkout {{ git_repo }}#{{ git_branch }}
   git:
     dest: "{{ tmp_dir }}/{{ project_name }}"
     repo: "{{ git_repo }}"
