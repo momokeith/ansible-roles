@@ -1,0 +1,6 @@
+---
+# tasks file for ng
+- name: Install angular cli 
+  npm:
+    name: @angular/cli
+    global: yes
