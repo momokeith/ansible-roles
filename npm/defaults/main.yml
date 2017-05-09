@@ -1,5 +1,0 @@
----
-# defaults file for npm
-
-npm:
-  node_js_version: 4.x
