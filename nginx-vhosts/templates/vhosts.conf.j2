@@ -11,12 +11,10 @@ server {
 
     location / {
         try_files $uri $uri/ =404;
-        include fastcgi_params;
-        fastcgi_param SCRIPT_FILENAME $realpath_root$fastcgi_script_name;
-        fastcgi_param DOCUMENT_ROOT $realpath_root;
-        internal;
+        sendfile  off;
     }
 
+    {% if item.value.location.php is defined %}
     location ~ \.php$ {
         fastcgi_split_path_info ^(.+\.php)(/.+)$;
         fastcgi_pass {{ item.value.location.php.fastcgi_pass }};
@@ -26,4 +24,5 @@ server {
         fastcgi_param DOCUMENT_ROOT $realpath_root;
         internal;
     }
+    {% endif %}
 }
