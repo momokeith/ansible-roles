@@ -13,7 +13,7 @@ server {
         try_files $uri $uri/ =404;
     }
 
-    {% if item.value.location and item.value.location.php is defined %}
+    {% if item.value.location is defined and item.value.location.php is defined %}
     location ~ \.php$ {
         fastcgi_split_path_info ^(.+\.php)(/.+)$;
         fastcgi_pass {{ item.value.location.php.fastcgi_pass }};
