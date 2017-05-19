@@ -14,7 +14,7 @@ server {
         index index.html;
     }
 
-    {% if item.value.location is defined and item.value.location.php is defined %}
+{% if item.value.location is defined and item.value.location.php is defined %}
     location ~ \.php$ {
         index index.php index.html;
         fastcgi_split_path_info ^(.+\.php)(/.+)$;
@@ -25,5 +25,5 @@ server {
         fastcgi_param DOCUMENT_ROOT $realpath_root;
         internal;
     }
-    {% endif %}
+{% endif %}
 }
