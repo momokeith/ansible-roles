@@ -15,8 +15,12 @@ server {
     }
 
 {% if item.value.location is defined and item.value.location.php is defined %}
+    location / {
+        try_files $uri /index.php$is_args$args /app.php$is_args$args;
+    }
+
     location ~ \.php$ {
-        index index.php index.html;
+        index index.php app.php index.html;
         fastcgi_split_path_info ^(.+\.php)(/.+)$;
         fastcgi_pass {{ item.value.location.php.fastcgi_pass }};
         fastcgi_index index.php;
