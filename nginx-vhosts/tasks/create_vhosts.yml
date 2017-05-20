@@ -2,7 +2,7 @@
 
 - name: Create vhosts
   template:
-    src: vhosts.conf.j2
+    src: vhosts.conf.{{ item.value.type }}.j2
     dest: /etc/nginx/sites-available/{{ item.key }}.conf
   with_dict: "{{ vhosts }}"
 
