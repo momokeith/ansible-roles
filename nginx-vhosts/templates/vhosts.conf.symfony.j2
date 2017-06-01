@@ -9,18 +9,24 @@ server {
     error_log  /var/log/nginx/{{ item.key }}.error.log;
     access_log  /var/log/nginx/{{ item.key }}.access.log;
 
-    index index.php;
+    index app.php;
 
+    # The main website
     location / {
-        try_files $uri /index.php$is_args$args;
+        try_files $uri /app.php$is_args$args;
     }
 
-    location ~ \.php$ {
-        fastcgi_split_path_info ^(.+\.php)(/.+)$;
-        fastcgi_pass unix:/var/run/php/php7.1-fpm.sock;
+    location ~ ^/app\.php(/|$) {
+        fastcgi_pass unix:/var/run/php/php7.0-fpm.sock;
+        fastcgi_split_path_info ^(.+\.php)(/.*)$;
         include fastcgi_params;
+        fastcgi_param SYMFONY_ENV {{ symfony_env }};
         fastcgi_param SCRIPT_FILENAME $realpath_root$fastcgi_script_name;
         fastcgi_param DOCUMENT_ROOT $realpath_root;
         internal;
+    }
+
+    location ~ \.php$ {
+        return 404;
     }
 }
