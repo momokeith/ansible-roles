@@ -7,7 +7,7 @@
   command: chown -R www-data:www-data {{ web_dir }}/{{ project_name }}/{{ commit_hash.stdout }}
 
 - name: Change directory access
-  command: chmod -R u=rwx,g=rw,o=r {{ web_dir }}/{{ project_name }}/{{ commit_hash.stdout }}
+  command: chmod -R ug=rwx,o=rx {{ web_dir }}/{{ project_name }}/{{ commit_hash.stdout }}
 
 - name: Create link {{ web_dir }}/{{ project_name }}/current
   file:
