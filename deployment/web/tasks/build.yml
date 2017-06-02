@@ -1,4 +1,6 @@
 ---
+- name: Environment variables
+  command: env
 
 - name: Building {{ project_name }}
   command: ant
