@@ -1,32 +1,29 @@
-server {
-    listen *:80;
-    listen *:443 ssl;
+{% extends "vhosts.conf.base.j2" %}
 
-    server_name {{ item.value.server_names | join(" ") }};
+{% block index %}
+index app.php;
+{% endblock %}
 
-    root {{ item.value.root }};
-
-    error_log  /var/log/nginx/{{ item.key }}.error.log;
-    access_log  /var/log/nginx/{{ item.key }}.access.log;
-
-    index app.php;
-
-    # The main website
-    location / {
-        try_files $uri /app.php$is_args$args;
-    }
-
-    location ~ ^/app\.php(/|$) {
-        fastcgi_pass unix:/var/run/php/php7.0-fpm.sock;
-        fastcgi_split_path_info ^(.+\.php)(/.*)$;
-        include fastcgi_params;
-        fastcgi_param SYMFONY_ENV {{ item.value.env }};
-        fastcgi_param SCRIPT_FILENAME $realpath_root$fastcgi_script_name;
-        fastcgi_param DOCUMENT_ROOT $realpath_root;
-        internal;
-    }
-
-    location ~ \.php$ {
-        return 404;
-    }
+{% block location %}
+location / {
+    try_files $uri /app.php$is_args$args;
 }
+location ~ ^/(app_dev|config)\.php(/|$) {
+    fastcgi_pass unix:/var/run/php7.1-fpm.sock;
+    fastcgi_split_path_info ^(.+\.php)(/.*)$;
+    include fastcgi_params;
+    fastcgi_param SCRIPT_FILENAME $realpath_root$fastcgi_script_name;
+    fastcgi_param DOCUMENT_ROOT $realpath_root;
+}
+location ~ ^/app\.php(/|$) {
+    fastcgi_pass unix:/var/run/php7.1-fpm.sock;
+    fastcgi_split_path_info ^(.+\.php)(/.*)$;
+    include fastcgi_params;
+    fastcgi_param SCRIPT_FILENAME $realpath_root$fastcgi_script_name;
+    fastcgi_param DOCUMENT_ROOT $realpath_root;
+    internal;
+}
+location ~ \.php$ {
+    return 404;
+}
+{% endblock %}

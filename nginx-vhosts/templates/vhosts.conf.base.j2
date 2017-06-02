@@ -1,0 +1,15 @@
+
+server {
+    listen *:80;
+    listen *:443 ssl;
+
+    server_name {{ item.value.server_names | join(" ") }};
+
+    root {{ item.value.root }};
+
+    error_log  /var/log/nginx/{{ item.key }}.error.log;
+    access_log  /var/log/nginx/{{ item.key }}.access.log;
+
+    {% block index %}{% endblock %}
+    {% block location %}{% endblock %}
+}
