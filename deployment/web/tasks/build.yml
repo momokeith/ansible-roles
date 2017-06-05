@@ -2,7 +2,7 @@
 
 - name: Generate parameters file
   template:
-    src: "{{ web_dir }}/{{ project_name }}/{{ commit_hash.stdout }}/{{ item.src }}"
+    src: "../../../../../../{{ item.src }}"
     dest: "{{ web_dir }}/{{ project_name }}/{{ commit_hash.stdout }}/{{ item.dest }}"
   with_items: "{{ build_parameters.files }}"
   when: build_parameters is defined
