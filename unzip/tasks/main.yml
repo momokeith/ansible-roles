@@ -1,0 +1,6 @@
+---
+# tasks file for unzip
+- name: Install unzip
+  apt:
+    name: unzip
+    update_cache: yes
