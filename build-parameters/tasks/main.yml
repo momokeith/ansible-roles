@@ -2,7 +2,7 @@
 # tasks file for build-parameters
 
 - debug:
-    var: "{{ ansible_env }}"
+    var: "{{ ansible_env.HOME }}"
 
 - name: Generate parameters file
   template:
