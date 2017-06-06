@@ -1,6 +1,4 @@
 ---
-- debug:
-    var: {{ ansible_env.BEWAMO_DATABASE_PORT }}
 
 - name: Generate parameters file
   template:
