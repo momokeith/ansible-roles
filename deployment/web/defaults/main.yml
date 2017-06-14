@@ -1,2 +1,10 @@
 ---
-# defaults file for deployment/web
+
+#git_repo: https://github.com/momokeith/bewamo-api.git
+#project_name: bewamo-api
+#web_dir: /var/www
+#git_branch: develop
+#
+#build_parameters:
+# files:
+#    - {src: app/config/parameters.yml.dist, dest: app/config/parameters.yml }
